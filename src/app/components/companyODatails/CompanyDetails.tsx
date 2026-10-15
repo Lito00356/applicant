@@ -1,6 +1,8 @@
 "use client";
 
-const CompanyDetails = ({ onClose }) => {
+import { CompanyDetailsProps } from "@/src/app/lib/types";
+
+const CompanyDetails = ({ onClose }: CompanyDetailsProps) => {
   return (
     <div className="absolute w-full h-full">
       <button type="button" onClick={onClose}>

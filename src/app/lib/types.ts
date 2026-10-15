@@ -14,3 +14,12 @@ export type FilterButtonProps = {
   isActive: boolean;
   index: number;
 };
+
+export type CompanyButtonProps = {
+  companyProp: Company;
+  onOpen: (company: Company) => void;
+};
+
+export type CompanyDetailsProps = {
+  onClose: () => void;
+};

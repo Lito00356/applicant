@@ -1,12 +1,7 @@
 "use client";
 
-import { Company, Status } from "@/src/app/lib/types";
+import { CompanyButtonProps, Status } from "@/src/app/lib/types";
 import { useState } from "react";
-
-type CompanyButtonProps = {
-  companyProp: Company;
-  onOpen: (company: Company) => void;
-};
 
 const statusLabels: Record<Status, string> = {
   toContact: "To contact",
