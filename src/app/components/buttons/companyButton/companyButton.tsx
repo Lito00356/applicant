@@ -5,6 +5,7 @@ import { useState } from "react";
 
 type CompanyButtonProps = {
   companyProp: Company;
+  onOpen: (company: Company) => void;
 };
 
 const statusLabels: Record<Status, string> = {
@@ -16,13 +17,13 @@ const statusLabels: Record<Status, string> = {
   rejected: "Rejected",
 };
 
-const CompanyButton = ({ companyProp }: CompanyButtonProps) => {
+const CompanyButton = ({ companyProp, onOpen }: CompanyButtonProps) => {
   const [status, setStatus] = useState<Status>(companyProp.status);
 
   return (
     <>
       <button
-        onClick={() => console.log("hallo")}
+        onClick={() => onOpen(companyProp)}
         className="col-span-3 grid cursor-pointer grid-cols-subgrid items-center text-left"
       >
         <span className="font-semibold text-slate-900">{companyProp.name}</span>
