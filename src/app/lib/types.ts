@@ -10,16 +10,15 @@ export type Company = {
 };
 
 export type FilterButtonProps = {
-  filter: string;
+  label: string;
   isActive: boolean;
-  index: number;
 };
 
-export type CompanyButtonProps = {
-  companyProp: Company;
+export type CompanyRowProps = {
+  company: Company;
   onOpen: (company: Company) => void;
 };
 
-export type CompanyDetailsProps = {
+export type CompanyDetailsModalProps = {
   onClose: () => void;
 };

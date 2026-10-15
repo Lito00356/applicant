@@ -1,8 +1,8 @@
 "use client";
 
-import { CompanyDetailsProps } from "@/src/app/lib/types";
+import { CompanyDetailsModalProps } from "@/src/app/lib/types";
 
-const CompanyDetails = ({ onClose }: CompanyDetailsProps) => {
+const CompanyDetailsModal = ({ onClose }: CompanyDetailsModalProps) => {
   return (
     <div className="absolute w-full h-full">
       <button type="button" onClick={onClose}>
@@ -27,4 +27,4 @@ const CompanyDetails = ({ onClose }: CompanyDetailsProps) => {
   );
 };
 
-export default CompanyDetails;
+export default CompanyDetailsModal;

@@ -6,7 +6,7 @@
 
 ## Projectstructuur
 
-- `app/` : pagina's en routes
-- `components/` : herbruikbare UI-componenten
-- `lib/` : hulpfuncties en database-logica
+- `src/app/` : pagina's en routes
+- `src/app/components/` : herbruikbare UI-componenten, gegroepeerd per onderwerp (`company/`, `filters/`, `timer/`)
+- `src/app/lib/` : types, hulpfuncties en database-logica
 - `db/migrations/` : Knex-migraties

@@ -1,9 +1,9 @@
 "use client";
 
-import CompanyButton from "@/src/app/components/buttons/companyButton/CompanyButton";
-import FilterButton from "@/src/app/components/buttons/filterButton/FilterButton";
-import Clock from "@/src/app/components/clock/Clock";
-import CompanyDetails from "@/src/app/components/companyODatails/CompanyDetails";
+import CompanyDetailsModal from "@/src/app/components/company/CompanyDetailsModal";
+import CompanyRow from "@/src/app/components/company/CompanyRow";
+import FilterButton from "@/src/app/components/filters/FilterButton";
+import ElapsedTimer from "@/src/app/components/timer/ElapsedTimer";
 import { companies } from "@/src/app/lib/companies";
 import { Company } from "@/src/app/lib/types";
 import { useState } from "react";
@@ -14,11 +14,11 @@ const filters = ["All", "To contact", "stretch", "Pending", "Rejected"];
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
-  const onOpen = (company: Company) => {
+  const openDetails = (company: Company) => {
     setSelectedCompany(company);
   };
 
-  const onClose = () => {
+  const closeDetails = () => {
     setSelectedCompany(null);
   };
 
@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           <div className="flex items-baseline gap-1 text-slate-400">
             <h2 className="text-lg font-semibold text-slate-700">TWJ</h2>
-            <Clock />
+            <ElapsedTimer />
           </div>
         </header>
 
@@ -42,7 +42,7 @@ export default function Home() {
               const isActive = index === 0;
               return (
                 <li key={index}>
-                  <FilterButton isActive={isActive} filter={filter} index={index} />
+                  <FilterButton isActive={isActive} label={filter} />
                 </li>
               );
             })}
@@ -68,14 +68,14 @@ export default function Home() {
                   key={company.id}
                   className="grid grid-cols-[1.2fr_1.4fr_1fr_1.2fr_1.5fr] items-center gap-4 border-b border-slate-100 px-6 py-5 transition-colors last:border-b-0 hover:bg-slate-50"
                 >
-                  <CompanyButton companyProp={company} onOpen={onOpen} />
+                  <CompanyRow company={company} onOpen={openDetails} />
                 </li>
               ))}
             </ul>
           </div>
         </section>
       </div>
-      {selectedCompany && <CompanyDetails onClose={onClose} />}
+      {selectedCompany && <CompanyDetailsModal onClose={closeDetails} />}
     </main>
   );
 }
