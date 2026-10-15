@@ -1,27 +1,10 @@
-"use client";
-
-import CompanyDetailsModal from "@/src/app/components/company/CompanyDetailsModal";
-import CompanyRow from "@/src/app/components/company/CompanyRow";
 import FilterButton from "@/src/app/components/filters/FilterButton";
 import ElapsedTimer from "@/src/app/components/timer/ElapsedTimer";
-import { companies } from "@/src/app/lib/companies";
-import { Company } from "@/src/app/lib/types";
-import { useState } from "react";
 
 const tableTitles = ["Company", "Role", "Location", "Application status", "URL"];
 const filters = ["All", "To contact", "stretch", "Pending", "Rejected"];
 
 export default function Home() {
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-
-  const openDetails = (company: Company) => {
-    setSelectedCompany(company);
-  };
-
-  const closeDetails = () => {
-    setSelectedCompany(null);
-  };
-
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-950 sm:px-8">
       <div className="mx-auto max-w-6xl">
@@ -61,21 +44,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
-            <ul>
-              {companies.map((company) => (
-                <li
-                  key={company.id}
-                  className="grid grid-cols-[1.2fr_1.4fr_1fr_1.2fr_1.5fr] items-center gap-4 border-b border-slate-100 px-6 py-5 transition-colors last:border-b-0 hover:bg-slate-50"
-                >
-                  <CompanyRow company={company} onOpen={openDetails} />
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
       </div>
-      {selectedCompany && <CompanyDetailsModal onClose={closeDetails} />}
     </main>
   );
 }

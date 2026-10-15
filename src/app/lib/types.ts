@@ -7,6 +7,8 @@ export type Company = {
   location: string;
   status: Status;
   jobUrl: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type FilterButtonProps = {
@@ -21,4 +23,8 @@ export type CompanyRowProps = {
 
 export type CompanyDetailsModalProps = {
   onClose: () => void;
+};
+
+export type CompanyListProps = {
+  companies: Company[];
 };
