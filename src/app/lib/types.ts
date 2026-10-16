@@ -39,3 +39,9 @@ export type LoginState = {
   error: string;
   email: string;
 } | null;
+
+export type CurrentUser = {
+  id: number;
+  name: string;
+  email: string;
+};

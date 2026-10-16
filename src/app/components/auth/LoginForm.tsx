@@ -25,6 +25,7 @@ const LoginForm = () => {
         <input
           name="password"
           type="password"
+          autoComplete="current-password"
           required
           minLength={3}
           className="rounded-lg border border-slate-300 px-3 py-2"

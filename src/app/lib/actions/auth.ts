@@ -3,7 +3,7 @@
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { db } from "@/src/app/lib/db";
-import { createSession } from "@/src/app/lib/session";
+import { createSession } from "@/src/app/lib/sessions";
 import { LoginState, RegisterState } from "@/src/app/lib/types";
 
 export async function register(prevState: RegisterState, formData: FormData): Promise<RegisterState> {
