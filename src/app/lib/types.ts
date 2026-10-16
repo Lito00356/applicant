@@ -28,3 +28,9 @@ export type CompanyDetailsModalProps = {
 export type CompanyListProps = {
   companies: Company[];
 };
+
+export type RegisterState = {
+  error: string;
+  name: string;
+  email: string;
+} | null;

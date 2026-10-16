@@ -1,5 +1,7 @@
+import CompanyListLoader from "@/src/app/components/company/CompanyListLoader";
 import FilterButton from "@/src/app/components/filters/FilterButton";
 import ElapsedTimer from "@/src/app/components/timer/ElapsedTimer";
+import { Suspense } from "react";
 
 const tableTitles = ["Company", "Role", "Location", "Application status", "URL"];
 const filters = ["All", "To contact", "stretch", "Pending", "Rejected"];
@@ -44,6 +46,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            <Suspense fallback={<p>Loading companies...</p>}>
+              <CompanyListLoader />
+            </Suspense>
           </div>
         </section>
       </div>

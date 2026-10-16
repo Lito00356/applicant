@@ -6,6 +6,12 @@ const config: Knex.Config = {
     filename: "./db/applicant.sqlite3",
   },
   useNullAsDefault: true,
+  pool: {
+    afterCreate: (conn: any, done: (err: Error | null, conn: any) => void) => {
+      conn.pragma("foreign_keys = ON");
+      done(null, conn);
+    },
+  },
   migrations: {
     directory: "./db/migrations",
     extension: "ts",

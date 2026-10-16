@@ -1,7 +1,9 @@
 import { db } from "@/src/app/lib/db";
 import { Company } from "@/src/app/lib/types";
+import { connection } from "next/server";
 
 export async function getCompanies(): Promise<Company[]> {
+  await connection();
   const companies = await db("companies")
     .select("id", "name", "role", "location", "status", "job_url as jobUrl", "created_at as added", "updated_at as updated")
     .orderBy("created_at");
