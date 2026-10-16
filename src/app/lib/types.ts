@@ -34,3 +34,8 @@ export type RegisterState = {
   name: string;
   email: string;
 } | null;
+
+export type LoginState = {
+  error: string;
+  email: string;
+} | null;

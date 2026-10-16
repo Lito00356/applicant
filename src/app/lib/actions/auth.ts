@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { db } from "@/src/app/lib/db";
 import { createSession } from "@/src/app/lib/session";
-import { RegisterState } from "@/src/app/lib/types";
+import { LoginState, RegisterState } from "@/src/app/lib/types";
 
 export async function register(prevState: RegisterState, formData: FormData): Promise<RegisterState> {
   const name = String(formData.get("name") ?? "").trim();
@@ -38,5 +38,26 @@ export async function register(prevState: RegisterState, formData: FormData): Pr
   });
 
   await createSession(userId);
+  redirect("/");
+}
+
+export async function login(prevState: LoginState, formData: FormData): Promise<LoginState> {
+  const email = String(formData.get("email") ?? "")
+    .trim()
+    .toLowerCase();
+  const password = String(formData.get("password") ?? "");
+
+  if (!email || !password) {
+    return { error: "Fill in all fields please", email };
+  }
+
+  const user = await db("users").where({ email }).first();
+  const passwordIsCorrect = user ? await bcrypt.compare(password, user.password_hash) : false;
+
+  if (!user || !passwordIsCorrect) {
+    return { error: "Email or password is incorrect", email };
+  }
+
+  await createSession(user.id);
   redirect("/");
 }

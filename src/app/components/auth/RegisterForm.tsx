@@ -49,7 +49,7 @@ const RegisterForm = () => {
         disabled={isPending}
         className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
       >
-        {isPending ? "Bezig..." : "Registreren"}
+        {isPending ? "Pending..." : "Register"}
       </button>
 
       <p className="text-sm text-slate-500">
