@@ -25,7 +25,7 @@ export async function register(prevState: RegisterState, formData: FormData): Pr
     return { error: "Password needs to be longer than 3 characters", name, email };
   }
 
-  const existingUser = await db("user").where({ email }).first();
+  const existingUser = await db("users").where({ email }).first();
   if (existingUser) {
     return { error: "User already exists", name, email };
   }
