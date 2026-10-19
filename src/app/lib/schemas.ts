@@ -9,9 +9,12 @@ const httpUrl = (message: string) => z.url({ protocol: /^https?$/, error: messag
 export const companySchema = z.object({
   name: z.string().trim().min(1, { error: "Name is required." }),
   role: z.string().trim().min(1, { error: "Role is required." }),
-  location: z.string().trim().min(1, { error: "Location is required." }),
-  status: z.enum(STATUSES, { error: "Choose a valid status." }),
-  jobUrl: httpUrl("The job URL must be a valid link."),
+  location: optional(z.string()),
+  status: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.enum(STATUSES, { error: "Choose a valid status." }).default("toContact"),
+  ),
+  jobUrl: optional(httpUrl("The job URL must be a valid http(s) link.")),
   websiteUrl: optional(httpUrl("The website URL must be a valid http(s) link.")),
   applicationMethod: optional(z.enum(APPLICATION_METHODS, { error: "Choose a valid application method." })),
   isSpontaneous: z.boolean(),

@@ -16,7 +16,7 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
       >
         <span className="font-semibold text-slate-900">{company.name}</span>
         <span className="text-slate-600">{company.role}</span>
-        <span className="text-slate-600">{company.location}</span>
+        <span className="text-slate-600">{company.location ?? "–"}</span>
       </button>
       <select
         value={status}
@@ -29,14 +29,18 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
           </option>
         ))}
       </select>
-      <a
-        href={company.jobUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="truncate text-slate-500 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950"
-      >
-        {company.jobUrl}
-      </a>
+      {company.jobUrl ? (
+        <a
+          href={company.jobUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="truncate text-slate-500 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950"
+        >
+          {company.jobUrl}
+        </a>
+      ) : (
+        <span className="text-slate-400">–</span>
+      )}
     </>
   );
 };

@@ -9,9 +9,9 @@ export type Company = {
   id: number;
   name: string;
   role: string;
-  location: string;
+  location: string | null;
   status: Status;
-  jobUrl: string;
+  jobUrl: string | null;
   createdAt: string;
   updatedAt: string;
   applicationMethod: ApplicationMethod | null;
