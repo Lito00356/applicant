@@ -1,6 +1,5 @@
 import type { Knex } from "knex";
 
-// Standaardwaarden: elke rij hieronder vult alleen in wat in de Excel-sheet staat.
 const defaults = {
   user_id: 1,
   location: null,
@@ -18,7 +17,6 @@ const defaults = {
 };
 
 const companies = [
-  // ---------- Afgewezen / geen antwoord ----------
   {
     name: "Flux",
     role: "ThreeJS developer",
@@ -109,7 +107,7 @@ const companies = [
     rejection_reason: "Geen antwoord",
   },
   {
-    name: "? Via Jobfixers",
+    name: "Via Jobfixers?",
     role: "Fullstack developer",
     location: "? Affligem",
     status: "rejected",
@@ -134,7 +132,6 @@ const companies = [
     job_url: "https://nebulae.dev/en/jobs/full-stack-developer",
   },
 
-  // ---------- Pending ----------
   {
     name: "Renson",
     role: "Front-end developer",
@@ -184,7 +181,6 @@ const companies = [
     job_url: "https://dogstudio.co/contact/",
   },
 
-  // ---------- Nog te contacteren ----------
   {
     name: "Twikit",
     role: "Backend developer",
