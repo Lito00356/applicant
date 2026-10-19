@@ -12,9 +12,11 @@ const AddCompanyButton = () => {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-sm"
+        aria-label="Add company"
+        title="Add company"
+        className="flex size-10 items-center justify-center rounded-full bg-add text-2xl leading-none text-slate-950 shadow-sm transition-transform hover:scale-105"
       >
-        + Add company
+        +
       </button>
 
       <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add company">

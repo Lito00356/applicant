@@ -2,6 +2,7 @@
 
 import CompanyDetailsModal from "@/src/app/components/company/CompanyDetailsModal";
 import CompanyRow from "@/src/app/components/company/CompanyRow";
+import { ROW_GRID } from "@/src/app/lib/constants";
 import { Company, CompanyListProps } from "@/src/app/lib/types";
 import { useState } from "react";
 
@@ -18,11 +19,11 @@ const CompanyList = ({ companies }: CompanyListProps) => {
 
   return (
     <>
-      <ul>
+      <ul className="flex flex-col gap-2">
         {companies.map((company) => (
           <li
             key={company.id}
-            className="grid grid-cols-[1.2fr_1.4fr_1fr_1.2fr_1.5fr] items-center gap-4 border-b border-slate-100 px-6 py-5 transition-colors last:border-b-0 hover:bg-slate-50"
+            className={`${ROW_GRID} rounded-md px-3 py-1 text-sm text-slate-950 transition-colors odd:bg-row hover:bg-slate-300`}
           >
             <CompanyRow company={company} onOpen={openDetails} />
           </li>

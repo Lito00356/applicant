@@ -3,16 +3,40 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  -all: #ffbe73;
+
+  /* Achtergronden */
+  --canvas: #e7e5e0;
+  --surface: #f8f7f4;
+  --row: #d9d9d9;
+
+  /* Filters en statussen */
+  --all: #ffbe73;
   --to-contact: #a0e7f6;
   --long-shot: #d0a4ff;
   --pending: #ffffbc;
+  --interview: #b9d4ff;
+  --offer: #c3f5b0;
   --rejected: #ff7979;
+
+  /* Knoppen */
+  --add: #c1ff9b;
 }
 
+/* Zo worden de variabelen Tailwind-klassen: bg-all, bg-to-contact, bg-surface, ... */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-row: var(--row);
+  --color-all: var(--all);
+  --color-to-contact: var(--to-contact);
+  --color-long-shot: var(--long-shot);
+  --color-pending: var(--pending);
+  --color-interview: var(--interview);
+  --color-offer: var(--offer);
+  --color-rejected: var(--rejected);
+  --color-add: var(--add);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

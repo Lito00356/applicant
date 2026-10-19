@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import type { APPLICATION_METHODS, FOLLOW_UP_METHODS, FOLLOW_UP_OUTCOMES, STATUSES } from "@/src/app/lib/constants";
+import type { APPLICATION_METHODS, FILTERS, FOLLOW_UP_METHODS, FOLLOW_UP_OUTCOMES, STATUSES } from "@/src/app/lib/constants";
 
 export type Status = (typeof STATUSES)[number];
 export type ApplicationMethod = (typeof APPLICATION_METHODS)[number];
 export type FollowUpMethod = (typeof FOLLOW_UP_METHODS)[number];
 export type FollowUpOutcome = (typeof FOLLOW_UP_OUTCOMES)[number];
+export type Filter = (typeof FILTERS)[number]["value"];
 
 export type Company = {
   id: number;
@@ -28,7 +29,13 @@ export type Company = {
 
 export type FilterButtonProps = {
   label: string;
+  color: string;
   isActive: boolean;
+  onClick: () => void;
+};
+
+export type CompanyBoardProps = {
+  companies: Company[];
 };
 
 export type CompanyRowProps = {

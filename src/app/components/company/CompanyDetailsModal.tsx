@@ -6,19 +6,11 @@ import {
   applicationMethodLabels,
   followUpMethodLabels,
   followUpOutcomeLabels,
+  statusColors,
   statusLabels,
 } from "@/src/app/lib/constants";
 import { formatDate, formatDateTime } from "@/src/app/lib/format";
-import { CompanyDetailsModalProps, Status } from "@/src/app/lib/types";
-
-const statusStyles: Record<Status, string> = {
-  toContact: "bg-slate-100 text-slate-700",
-  stretch: "bg-violet-100 text-violet-700",
-  pending: "bg-amber-100 text-amber-800",
-  interview: "bg-sky-100 text-sky-800",
-  offer: "bg-emerald-100 text-emerald-800",
-  rejected: "bg-rose-100 text-rose-700",
-};
+import { CompanyDetailsModalProps } from "@/src/app/lib/types";
 
 const Empty = () => <span className="text-slate-400">—</span>;
 
@@ -61,7 +53,7 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           <div className="-mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
             <span>{company.role}</span>
             {company.location && <span>· {company.location}</span>}
-            <span className={`ml-auto rounded-full px-3 py-1 text-xs font-medium ${statusStyles[company.status]}`}>
+            <span className={`ml-auto rounded-full px-3 py-1 text-xs font-medium text-slate-950 ${statusColors[company.status]}`}>
               {statusLabels[company.status]}
             </span>
             {company.isSpontaneous && (
@@ -70,10 +62,10 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           </div>
 
           <Section title="Vacancy">
-            <DetailItem label="Job URL" wide>
+            <DetailItem label="Job URL">
               {company.jobUrl && <ExternalLink href={company.jobUrl} />}
             </DetailItem>
-            <DetailItem label="Company website" wide>
+            <DetailItem label="Company website">
               {company.websiteUrl && <ExternalLink href={company.websiteUrl} />}
             </DetailItem>
           </Section>
