@@ -1,5 +1,10 @@
 export type Status = "toContact" | "stretch" | "pending" | "interview" | "offer" | "rejected";
 
+export const APPLICATION_METHODS = ["email", "website", "job_platform", "phone", "recruiter"] as const;
+export type ApplicationMethod = (typeof APPLICATION_METHODS)[number];
+export type FollowUpMethod = "email" | "phone";
+export type FollowUpOutcome = "no_answer" | "replied" | "invited";
+
 export type Company = {
   id: number;
   name: string;
@@ -9,6 +14,15 @@ export type Company = {
   jobUrl: string;
   createdAt: string;
   updatedAt: string;
+  applicationMethod: ApplicationMethod | null;
+  isSpontaneous: boolean;
+  followUpMethod: FollowUpMethod | null;
+  followUpOutcome: FollowUpOutcome | null;
+  followUpAt: string | null;
+  followUpNote: string | null;
+  rejectionReason: string | null;
+  cons: string | null;
+  websiteUrl: string | null;
 };
 
 export type FilterButtonProps = {
