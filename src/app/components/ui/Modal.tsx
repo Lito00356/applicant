@@ -6,7 +6,6 @@ import { ModalProps } from "@/src/app/lib/types";
 const Modal = ({ open, onClose, title, children }: ModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // De browser opent en sluit een <dialog> zelf; wij volgen de "open"-prop.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -20,7 +19,6 @@ const Modal = ({ open, onClose, title, children }: ModalProps) => {
       ref={dialogRef}
       onClose={onClose}
       onClick={(event) => {
-        // Klik op de donkere achtergrond (de dialog zelf, niet de inhoud) sluit de modal.
         if (event.target === dialogRef.current) onClose();
       }}
       className="m-auto w-full max-w-2xl rounded-2xl p-0 shadow-xl backdrop:bg-slate-950/50"

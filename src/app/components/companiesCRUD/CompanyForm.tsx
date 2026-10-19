@@ -11,11 +11,9 @@ const inputClass = "rounded-lg border border-slate-300 px-3 py-2 font-normal";
 const CompanyForm = ({ onSuccess, onCancel }: CompanyFormProps) => {
   const [state, formAction, isPending] = useActionState(createCompany, null);
 
-  // Bij een fout geeft de actie de ingevulde waarden terug; anders zijn er geen.
   const values = state?.success === false ? state.values : undefined;
   const error = state?.success === false ? state.error : undefined;
 
-  // Opgeslagen? Laat de ouder (de modal) weten dat hij mag sluiten.
   useEffect(() => {
     if (state?.success) onSuccess();
   }, [state, onSuccess]);

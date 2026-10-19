@@ -28,7 +28,7 @@ const CompanyList = ({ companies }: CompanyListProps) => {
           </li>
         ))}
       </ul>
-      {selectedCompany && <CompanyDetailsModal onClose={closeDetails} />}
+      <CompanyDetailsModal company={selectedCompany} onClose={closeDetails} />
     </>
   );
 };

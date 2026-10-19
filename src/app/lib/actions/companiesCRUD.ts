@@ -49,7 +49,6 @@ export async function createCompany(_prevState: CompanyFormState, formData: Form
     rejection_reason: company.rejectionReason,
   });
 
-  // De lijst op "/" opnieuw laden; de modal sluit zichzelf bij success.
   revalidatePath("/");
   return { success: true };
 }

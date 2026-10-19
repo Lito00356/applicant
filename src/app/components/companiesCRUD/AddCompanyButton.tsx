@@ -18,7 +18,6 @@ const AddCompanyButton = () => {
       </button>
 
       <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add company">
-        {/* Alleen renderen als de modal open is: zo begint het formulier telkens leeg. */}
         {isOpen && <CompanyForm onSuccess={() => setIsOpen(false)} onCancel={() => setIsOpen(false)} />}
       </Modal>
     </>

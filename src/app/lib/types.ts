@@ -37,6 +37,7 @@ export type CompanyRowProps = {
 };
 
 export type CompanyDetailsModalProps = {
+  company: Company | null;
   onClose: () => void;
 };
 
