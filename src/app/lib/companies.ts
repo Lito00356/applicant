@@ -25,7 +25,7 @@ export async function getCompanies(): Promise<Company[]> {
       "website_url as websiteUrl",
     )
     .where("user_id", user.id)
-    .orderBy("created_at");
+    .orderBy([{ column: "created_at" }, { column: "id" }]);
 
   return companies.map((company) => ({
     ...company,
