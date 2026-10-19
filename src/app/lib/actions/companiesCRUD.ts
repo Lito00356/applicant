@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { db } from "@/src/app/lib/db";
 import { companySchema } from "@/src/app/lib/schemas";
 import { requireUser } from "@/src/app/lib/sessions";
@@ -31,7 +30,7 @@ export async function createCompany(_prevState: CompanyFormState, formData: Form
 
   const result = companySchema.safeParse(values);
   if (!result.success) {
-    return { error: result.error.issues[0].message, values };
+    return { success: false, error: result.error.issues[0].message, values };
   }
 
   const company = result.data;
@@ -50,6 +49,7 @@ export async function createCompany(_prevState: CompanyFormState, formData: Form
     rejection_reason: company.rejectionReason,
   });
 
+  // De lijst op "/" opnieuw laden; de modal sluit zichzelf bij success.
   revalidatePath("/");
-  redirect("/");
+  return { success: true };
 }

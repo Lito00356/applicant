@@ -1,3 +1,4 @@
+import AddCompanyButton from "@/src/app/components/companiesCRUD/AddCompanyButton";
 import CompanyListLoader from "@/src/app/components/company/CompanyListLoader";
 import FilterButton from "@/src/app/components/filters/FilterButton";
 import ElapsedTimer from "@/src/app/components/timer/ElapsedTimer";
@@ -21,18 +22,21 @@ export default function Home() {
           </div>
         </header>
 
-        <nav aria-label="Application filters" className="mb-6">
-          <ul className="flex flex-wrap items-center gap-2">
-            {filters.map((filter, index) => {
-              const isActive = index === 0;
-              return (
-                <li key={index}>
-                  <FilterButton isActive={isActive} label={filter} />
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <nav aria-label="Application filters">
+            <ul className="flex flex-wrap items-center gap-2">
+              {filters.map((filter, index) => {
+                const isActive = index === 0;
+                return (
+                  <li key={index}>
+                    <FilterButton isActive={isActive} label={filter} />
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+          <AddCompanyButton />
+        </div>
 
         <section
           aria-label="Job applications"

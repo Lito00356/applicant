@@ -1,16 +1,24 @@
 "use client";
 
-import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { createCompany } from "@/src/app/lib/actions/companiesCRUD";
 import { APPLICATION_METHODS, applicationMethodLabels, STATUSES, statusLabels } from "@/src/app/lib/constants";
+import { CompanyFormProps } from "@/src/app/lib/types";
 
 const labelClass = "flex flex-col gap-1 text-sm font-medium text-slate-700";
 const inputClass = "rounded-lg border border-slate-300 px-3 py-2 font-normal";
 
-const CompanyForm = () => {
+const CompanyForm = ({ onSuccess, onCancel }: CompanyFormProps) => {
   const [state, formAction, isPending] = useActionState(createCompany, null);
-  const values = state?.values;
+
+  // Bij een fout geeft de actie de ingevulde waarden terug; anders zijn er geen.
+  const values = state?.success === false ? state.values : undefined;
+  const error = state?.success === false ? state.error : undefined;
+
+  // Opgeslagen? Laat de ouder (de modal) weten dat hij mag sluiten.
+  useEffect(() => {
+    if (state?.success) onSuccess();
+  }, [state, onSuccess]);
 
   return (
     <form action={formAction} className="flex flex-col gap-8">
@@ -95,12 +103,12 @@ const CompanyForm = () => {
         </label>
       </fieldset>
 
-      {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
       <div className="flex items-center justify-end gap-4">
-        <Link href="/" className="text-sm text-slate-500 underline">
+        <button type="button" onClick={onCancel} className="text-sm text-slate-500 underline">
           Cancel
-        </Link>
+        </button>
         <button
           type="submit"
           disabled={isPending}

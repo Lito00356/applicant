@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { APPLICATION_METHODS, FOLLOW_UP_METHODS, FOLLOW_UP_OUTCOMES, STATUSES } from "@/src/app/lib/constants";
 
 export type Status = (typeof STATUSES)[number];
@@ -67,10 +68,22 @@ export type CompanyFormValues = {
   rejectionReason: string;
 };
 
-export type CompanyFormState = {
-  error: string;
-  values: CompanyFormValues;
-} | null;
+export type CompanyFormState =
+  | { success: true }
+  | { success: false; error: string; values: CompanyFormValues }
+  | null;
+
+export type CompanyFormProps = {
+  onSuccess: () => void;
+  onCancel: () => void;
+};
+
+export type ModalProps = {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children: ReactNode;
+};
 
 export type CurrentUser = {
   id: number;
