@@ -1,16 +1,8 @@
 "use client";
 
+import { statusLabels } from "@/src/app/lib/constants";
 import { CompanyRowProps, Status } from "@/src/app/lib/types";
 import { useState } from "react";
-
-const statusLabels: Record<Status, string> = {
-  toContact: "To contact",
-  stretch: "Stretch",
-  pending: "Pending",
-  interview: "Interview",
-  offer: "Offer",
-  rejected: "Rejected",
-};
 
 const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
   const [status, setStatus] = useState<Status>(company.status);

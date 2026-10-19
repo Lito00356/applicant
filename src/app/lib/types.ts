@@ -1,9 +1,9 @@
-export type Status = "toContact" | "stretch" | "pending" | "interview" | "offer" | "rejected";
+import type { APPLICATION_METHODS, FOLLOW_UP_METHODS, FOLLOW_UP_OUTCOMES, STATUSES } from "@/src/app/lib/constants";
 
-export const APPLICATION_METHODS = ["email", "website", "job_platform", "phone", "recruiter"] as const;
+export type Status = (typeof STATUSES)[number];
 export type ApplicationMethod = (typeof APPLICATION_METHODS)[number];
-export type FollowUpMethod = "email" | "phone";
-export type FollowUpOutcome = "no_answer" | "replied" | "invited";
+export type FollowUpMethod = (typeof FOLLOW_UP_METHODS)[number];
+export type FollowUpOutcome = (typeof FOLLOW_UP_OUTCOMES)[number];
 
 export type Company = {
   id: number;
@@ -52,6 +52,24 @@ export type RegisterState = {
 export type LoginState = {
   error: string;
   email: string;
+} | null;
+
+export type CompanyFormValues = {
+  name: string;
+  role: string;
+  location: string;
+  status: string;
+  jobUrl: string;
+  websiteUrl: string;
+  applicationMethod: string;
+  isSpontaneous: boolean;
+  cons: string;
+  rejectionReason: string;
+};
+
+export type CompanyFormState = {
+  error: string;
+  values: CompanyFormValues;
 } | null;
 
 export type CurrentUser = {
