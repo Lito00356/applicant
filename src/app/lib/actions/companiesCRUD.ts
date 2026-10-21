@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/src/app/lib/db";
-import { companySchema } from "@/src/app/lib/schemas";
+import { companySchema, statusUpdateSchema } from "@/src/app/lib/schemas";
 import { requireUser } from "@/src/app/lib/sessions";
-import { CompanyFormState, CompanyFormValues } from "@/src/app/lib/types";
+import { CompanyFormState, CompanyFormValues, Status } from "@/src/app/lib/types";
 
 function getText(formData: FormData, field: string): string {
   return String(formData.get(field) ?? "").trim();
@@ -48,6 +48,29 @@ export async function createCompany(_prevState: CompanyFormState, formData: Form
     cons: company.cons,
     rejection_reason: company.rejectionReason,
   });
+
+  revalidatePath("/");
+  return { success: true };
+}
+
+// ---------- Update: alleen de status ----------
+
+export async function updateCompanyStatus(companyId: number, status: Status): Promise<{ success: boolean }> {
+  const user = await requireUser();
+
+  const result = statusUpdateSchema.safeParse({ companyId, status });
+  if (!result.success) {
+    return { success: false };
+  }
+
+  const updatedRows = await db("companies").where({ id: result.data.companyId, user_id: user.id }).update({
+    status: result.data.status,
+    updated_at: db.fn.now(),
+  });
+
+  if (updatedRows === 0) {
+    return { success: false };
+  }
 
   revalidatePath("/");
   return { success: true };

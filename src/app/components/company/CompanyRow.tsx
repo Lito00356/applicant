@@ -1,11 +1,24 @@
 "use client";
 
+import { useOptimistic, useState, useTransition } from "react";
+import { updateCompanyStatus } from "@/src/app/lib/actions/companiesCRUD";
 import { STATUSES, statusColors, statusLabels } from "@/src/app/lib/constants";
 import { CompanyRowProps, Status } from "@/src/app/lib/types";
-import { useState } from "react";
 
 const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
-  const [status, setStatus] = useState<Status>(company.status);
+  const [status, setOptimisticStatus] = useOptimistic(company.status);
+  const [isPending, startTransition] = useTransition();
+  const [hasError, setHasError] = useState(false);
+
+  const changeStatus = (newStatus: Status) => {
+    setHasError(false);
+
+    startTransition(async () => {
+      setOptimisticStatus(newStatus);
+      const result = await updateCompanyStatus(company.id, newStatus);
+      if (!result.success) setHasError(true);
+    });
+  };
 
   return (
     <>
@@ -21,9 +34,13 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
       <div className="relative w-36">
         <select
           value={status}
-          onChange={(e) => setStatus(e.target.value as Status)}
+          onChange={(e) => changeStatus(e.target.value as Status)}
           aria-label={`Status of ${company.name}`}
-          className={`${statusColors[status]} w-full cursor-pointer appearance-none rounded-md py-0.5 pl-1.5 pr-6 text-xs text-slate-950`}
+          aria-invalid={hasError}
+          title={hasError ? "Could not save the status. Try again." : undefined}
+          className={`${statusColors[status]} w-full cursor-pointer appearance-none rounded-md py-0.5 pl-1.5 pr-6 text-xs text-slate-950 ${
+            isPending ? "opacity-60" : ""
+          } ${hasError ? "ring-2 ring-red-600" : ""}`}
         >
           {STATUSES.map((value) => (
             <option key={value} value={value} className="bg-white">
@@ -41,12 +58,7 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
         </svg>
       </div>
       {company.jobUrl ? (
-        <a
-          href={company.jobUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="truncate hover:underline"
-        >
+        <a href={company.jobUrl} target="_blank" rel="noreferrer" className="truncate hover:underline">
           {company.jobUrl}
         </a>
       ) : (

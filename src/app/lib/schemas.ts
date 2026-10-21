@@ -23,3 +23,8 @@ export const companySchema = z.object({
 });
 
 export type CompanyInput = z.infer<typeof companySchema>;
+
+export const statusUpdateSchema = z.object({
+  companyId: z.number().int().positive(),
+  status: z.enum(STATUSES),
+});
