@@ -27,11 +27,11 @@ export const ROW_GRID = "grid grid-cols-5 items-center gap-4";
 
 // De filtertabs boven de tabel. "all" toont alles, de rest filtert op status.
 export const FILTERS = [
-  { value: "all", label: "All", color: "bg-all" },
   { value: "toContact", label: "To contact", color: "bg-to-contact" },
   { value: "stretch", label: "Long shot", color: "bg-long-shot" },
   { value: "pending", label: "Pending", color: "bg-pending" },
   { value: "rejected", label: "Rejected by", color: "bg-rejected" },
+  { value: "all", label: "All", color: "bg-all" },
 ] as const;
 
 export const applicationMethodLabels = {

@@ -10,7 +10,7 @@ import { CompanyBoardProps, Filter } from "@/src/app/lib/types";
 const tableTitles = ["Company", "Function", "Location", "Application status", "Vacature"];
 
 const CompanyBoard = ({ companies }: CompanyBoardProps) => {
-  const [activeFilter, setActiveFilter] = useState<Filter>("all");
+  const [activeFilter, setActiveFilter] = useState<Filter>("toContact");
 
   const visibleCompanies =
     activeFilter === "all" ? companies : companies.filter((company) => company.status === activeFilter);
