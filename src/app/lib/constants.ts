@@ -23,7 +23,8 @@ export const statusColors = {
 } satisfies Record<(typeof STATUSES)[number], string>;
 
 // Kolommen van de tabel: koppen en rijen gebruiken hetzelfde raster.
-export const ROW_GRID = "grid grid-cols-5 items-center gap-4";
+// Op gsm: 2 kolommen (info | status). Vanaf md: de volledige tabel met 5 kolommen.
+export const ROW_GRID = "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:grid-cols-5";
 
 // De filtertabs boven de tabel. "all" toont alles, de rest filtert op status.
 export const FILTERS = [

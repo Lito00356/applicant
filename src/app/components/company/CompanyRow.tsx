@@ -25,13 +25,13 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
       <button
         type="button"
         onClick={() => onOpen(company)}
-        className="col-span-3 grid cursor-pointer grid-cols-subgrid items-center text-left"
+        className="flex min-w-0 cursor-pointer flex-col text-left md:col-span-3 md:grid md:grid-cols-subgrid md:items-center"
       >
-        <span className="truncate">{company.name}</span>
-        <span className="truncate">{company.role}</span>
-        <span className="truncate">{company.location ?? "–"}</span>
+        <span className="truncate font-medium md:font-normal">{company.name}</span>
+        <span className="truncate text-xs text-slate-600 md:text-sm md:text-slate-950">{company.role}</span>
+        <span className="truncate text-xs text-slate-600 md:text-sm md:text-slate-950">{company.location ?? "–"}</span>
       </button>
-      <div className="relative w-36">
+      <div className="relative w-32 md:w-36">
         <select
           value={status}
           onChange={(e) => changeStatus(e.target.value as Status)}
@@ -58,11 +58,11 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
         </svg>
       </div>
       {company.jobUrl ? (
-        <a href={company.jobUrl} target="_blank" rel="noreferrer" className="truncate hover:underline">
+        <a href={company.jobUrl} target="_blank" rel="noreferrer" className="hidden truncate hover:underline md:block">
           {company.jobUrl}
         </a>
       ) : (
-        <span className="text-slate-400">–</span>
+        <span className="hidden text-slate-400 md:block">–</span>
       )}
     </>
   );

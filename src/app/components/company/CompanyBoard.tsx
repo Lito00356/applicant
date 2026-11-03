@@ -18,9 +18,10 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
   return (
     <div className="flex flex-1 flex-col">
       <nav aria-label="Application filters">
-        <ul className="flex items-end gap-2 pl-0">
+        {/* Op smalle schermen scrollen de tabs horizontaal in plaats van uit beeld te vallen */}
+        <ul className="flex items-end gap-2 overflow-x-auto pl-0">
           {FILTERS.map((filter) => (
-            <li key={filter.value}>
+            <li key={filter.value} className="shrink-0">
               <FilterButton
                 label={filter.label}
                 color={filter.color}
@@ -34,15 +35,18 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
 
       <section
         aria-label="Job applications"
-        className="relative flex flex-1 flex-col overflow-x-auto rounded-b-xl rounded-tr-xl bg-surface px-5 pb-20 pt-5"
+        className="relative flex flex-1 flex-col overflow-x-auto rounded-b-xl rounded-tr-xl bg-surface px-3 pb-20 pt-3 sm:px-5 sm:pt-5"
       >
-        <div className="min-w-190">
-          <div className={`${ROW_GRID} px-3 pb-4`}>
-            {tableTitles.map((title) => (
-              <div key={title} className="text-base font-semibold text-slate-950">
-                {title}
-              </div>
-            ))}
+        <div className="md:min-w-190">
+          {/* Kolomtitels alleen bij de tabelweergave */}
+          <div className="hidden md:block">
+            <div className={`${ROW_GRID} px-3 pb-4`}>
+              {tableTitles.map((title) => (
+                <div key={title} className="text-base font-semibold text-slate-950">
+                  {title}
+                </div>
+              ))}
+            </div>
           </div>
 
           {visibleCompanies.length > 0 ? (

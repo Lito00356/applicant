@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { createCompany } from "@/src/app/lib/actions/companiesCRUD";
 import { APPLICATION_METHODS, applicationMethodLabels, STATUSES, statusLabels } from "@/src/app/lib/constants";
 import { Company, CompanyFormProps, CompanyFormValues } from "@/src/app/lib/types";
 
