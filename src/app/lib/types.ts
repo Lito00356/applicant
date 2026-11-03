@@ -46,6 +46,7 @@ export type CompanyRowProps = {
 export type CompanyDetailsModalProps = {
   company: Company | null;
   onClose: () => void;
+  onEdit: () => void;
 };
 
 export type CompanyListProps = {
@@ -76,10 +77,7 @@ export type CompanyFormValues = {
   rejectionReason: string;
 };
 
-export type CompanyFormState =
-  | { success: true }
-  | { success: false; error: string; values: CompanyFormValues }
-  | null;
+export type CompanyFormState = { success: true } | { success: false; error: string; values: CompanyFormValues } | null;
 
 export type CompanyFormProps = {
   onSuccess: () => void;
@@ -89,6 +87,7 @@ export type CompanyFormProps = {
 export type ModalProps = {
   open: boolean;
   onClose: () => void;
+  onEdit: () => void;
   title: string;
   children: ReactNode;
 };

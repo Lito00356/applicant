@@ -14,7 +14,6 @@ import { CompanyDetailsModalProps } from "@/src/app/lib/types";
 
 const Empty = () => <span className="text-slate-400">—</span>;
 
-// Eén label + waarde. Lege waarden (null, undefined, "" of false) tonen een streepje.
 const DetailItem = ({ label, children, wide = false }: { label: string; children: ReactNode; wide?: boolean }) => {
   const isEmpty = children === null || children === undefined || children === "" || children === false;
 
@@ -44,16 +43,17 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
   </section>
 );
 
-const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => {
+const CompanyDetailsModal = ({ company, onClose, onEdit }: CompanyDetailsModalProps) => {
   return (
-    <Modal open={company !== null} onClose={onClose} title={company?.name ?? ""}>
+    <Modal open={company !== null} onClose={onClose} onEdit={onEdit} title={company?.name ?? ""}>
       {company && (
         <div className="flex flex-col gap-6">
-          {/* Kop: functie, locatie en labels */}
           <div className="-mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
             <span>{company.role}</span>
             {company.location && <span>· {company.location}</span>}
-            <span className={`ml-auto rounded-full px-3 py-1 text-xs font-medium text-slate-950 ${statusColors[company.status]}`}>
+            <span
+              className={`ml-auto rounded-full px-3 py-1 text-xs font-medium text-slate-950 ${statusColors[company.status]}`}
+            >
               {statusLabels[company.status]}
             </span>
             {company.isSpontaneous && (
@@ -62,9 +62,7 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           </div>
 
           <Section title="Vacancy">
-            <DetailItem label="Job URL">
-              {company.jobUrl && <ExternalLink href={company.jobUrl} />}
-            </DetailItem>
+            <DetailItem label="Job URL">{company.jobUrl && <ExternalLink href={company.jobUrl} />}</DetailItem>
             <DetailItem label="Company website">
               {company.websiteUrl && <ExternalLink href={company.websiteUrl} />}
             </DetailItem>
@@ -78,9 +76,7 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           </Section>
 
           <Section title="Follow-up">
-            <DetailItem label="Method">
-              {company.followUpMethod && followUpMethodLabels[company.followUpMethod]}
-            </DetailItem>
+            <DetailItem label="Method">{company.followUpMethod && followUpMethodLabels[company.followUpMethod]}</DetailItem>
             <DetailItem label="Outcome">
               {company.followUpOutcome && followUpOutcomeLabels[company.followUpOutcome]}
             </DetailItem>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ModalProps } from "@/src/app/lib/types";
 
-const Modal = ({ open, onClose, title, children }: ModalProps) => {
+const Modal = ({ open, onClose, onEdit, title, children }: ModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -26,6 +26,9 @@ const Modal = ({ open, onClose, title, children }: ModalProps) => {
       <div className="max-h-[85vh] overflow-y-auto p-8">
         <div className="mb-6 flex items-start justify-between gap-4">
           <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+          <button type="button" onClick={onEdit} aria-label="Edit" className="">
+            edit
+          </button>
           <button
             type="button"
             onClick={onClose}

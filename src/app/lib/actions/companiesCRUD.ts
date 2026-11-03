@@ -75,3 +75,9 @@ export async function updateCompanyStatus(companyId: number, status: Status): Pr
   revalidatePath("/");
   return { success: true };
 }
+
+export async function updateCompanyDetails(companyId: number, _prevState: CompanyFormState, formData: FormData) {
+  const user = await requireUser();
+
+  console.log("gelukt");
+}

@@ -17,6 +17,8 @@ const CompanyList = ({ companies }: CompanyListProps) => {
     setSelectedCompany(null);
   };
 
+  const editDetails = () => {};
+
   return (
     <>
       <ul className="flex flex-col gap-2">
