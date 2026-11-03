@@ -2,6 +2,7 @@
 
 import CompanyDetailsModal from "@/src/app/components/company/CompanyDetailsModal";
 import CompanyRow from "@/src/app/components/company/CompanyRow";
+import { updateCompanyDetails } from "@/src/app/lib/actions/companiesCRUD";
 import { ROW_GRID } from "@/src/app/lib/constants";
 import { Company, CompanyListProps } from "@/src/app/lib/types";
 import { useState } from "react";
@@ -17,7 +18,9 @@ const CompanyList = ({ companies }: CompanyListProps) => {
     setSelectedCompany(null);
   };
 
-  const editDetails = () => {};
+  const editDetails = () => {
+    // updateCompanyDetails();
+  };
 
   return (
     <>
@@ -31,7 +34,7 @@ const CompanyList = ({ companies }: CompanyListProps) => {
           </li>
         ))}
       </ul>
-      <CompanyDetailsModal company={selectedCompany} onClose={closeDetails} />
+      <CompanyDetailsModal company={selectedCompany} onClose={closeDetails} onEdit={editDetails} />
     </>
   );
 };

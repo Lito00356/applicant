@@ -1,7 +1,9 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import CompanyForm from "@/src/app/components/companiesCRUD/CompanyForm";
 import Modal from "@/src/app/components/ui/Modal";
+import { updateCompanyDetails } from "@/src/app/lib/actions/companiesCRUD";
 import {
   applicationMethodLabels,
   followUpMethodLabels,
@@ -43,10 +45,32 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
   </section>
 );
 
-const CompanyDetailsModal = ({ company, onClose, onEdit }: CompanyDetailsModalProps) => {
+const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Bij sluiten altijd terug naar "bekijken", anders opent het volgende bedrijf in edit-modus
+  const handleClose = () => {
+    setIsEditing(false);
+    onClose();
+  };
+
   return (
-    <Modal open={company !== null} onClose={onClose} onEdit={onEdit} title={company?.name ?? ""}>
-      {company && (
+    <Modal
+      open={company !== null}
+      onClose={handleClose}
+      onEdit={isEditing ? undefined : () => setIsEditing(true)}
+      title={company?.name ?? ""}
+    >
+      {company && isEditing && (
+        <CompanyForm
+          action={updateCompanyDetails.bind(null, company.id)}
+          company={company}
+          onSuccess={() => setIsEditing(false)}
+          onCancel={() => setIsEditing(false)}
+        />
+      )}
+
+      {company && !isEditing && (
         <div className="flex flex-col gap-6">
           <div className="-mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
             <span>{company.role}</span>

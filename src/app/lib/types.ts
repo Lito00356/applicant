@@ -80,6 +80,8 @@ export type CompanyFormValues = {
 export type CompanyFormState = { success: true } | { success: false; error: string; values: CompanyFormValues } | null;
 
 export type CompanyFormProps = {
+  action: (prevState: CompanyFormState, formData: FormData) => Promise<CompanyFormState>;
+  company?: Company;
   onSuccess: () => void;
   onCancel: () => void;
 };
@@ -87,7 +89,7 @@ export type CompanyFormProps = {
 export type ModalProps = {
   open: boolean;
   onClose: () => void;
-  onEdit: () => void;
+  onEdit?: () => void;
   title: string;
   children: ReactNode;
 };

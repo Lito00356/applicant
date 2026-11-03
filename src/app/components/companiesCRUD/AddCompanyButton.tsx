@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CompanyForm from "@/src/app/components/companiesCRUD/CompanyForm";
 import Modal from "@/src/app/components/ui/Modal";
+import { createCompany } from "@/src/app/lib/actions/companiesCRUD";
 
 const AddCompanyButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,9 @@ const AddCompanyButton = () => {
       </button>
 
       <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add company">
-        {isOpen && <CompanyForm onSuccess={() => setIsOpen(false)} onCancel={() => setIsOpen(false)} />}
+        {isOpen && (
+          <CompanyForm action={createCompany} onSuccess={() => setIsOpen(false)} onCancel={() => setIsOpen(false)} />
+        )}
       </Modal>
     </>
   );

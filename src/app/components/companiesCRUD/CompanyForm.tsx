@@ -3,15 +3,28 @@
 import { useActionState, useEffect } from "react";
 import { createCompany } from "@/src/app/lib/actions/companiesCRUD";
 import { APPLICATION_METHODS, applicationMethodLabels, STATUSES, statusLabels } from "@/src/app/lib/constants";
-import { CompanyFormProps } from "@/src/app/lib/types";
+import { Company, CompanyFormProps, CompanyFormValues } from "@/src/app/lib/types";
 
 const labelClass = "flex flex-col gap-1 text-sm font-medium text-slate-700";
 const inputClass = "rounded-lg border border-slate-300 px-3 py-2 font-normal";
 
-const CompanyForm = ({ onSuccess, onCancel }: CompanyFormProps) => {
-  const [state, formAction, isPending] = useActionState(createCompany, null);
+const toFormValues = (company: Company): CompanyFormValues => ({
+  name: company.name,
+  role: company.role,
+  location: company.location ?? "",
+  status: company.status,
+  jobUrl: company.jobUrl ?? "",
+  websiteUrl: company.websiteUrl ?? "",
+  applicationMethod: company.applicationMethod ?? "",
+  isSpontaneous: company.isSpontaneous,
+  cons: company.cons ?? "",
+  rejectionReason: company.rejectionReason ?? "",
+});
 
-  const values = state?.success === false ? state.values : undefined;
+const CompanyForm = ({ action, company, onSuccess, onCancel }: CompanyFormProps) => {
+  const [state, formAction, isPending] = useActionState(action, null);
+
+  const values = state?.success === false ? state.values : company ? toFormValues(company) : undefined;
   const error = state?.success === false ? state.error : undefined;
 
   useEffect(() => {
@@ -112,7 +125,7 @@ const CompanyForm = ({ onSuccess, onCancel }: CompanyFormProps) => {
           disabled={isPending}
           className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
         >
-          {isPending ? "Saving..." : "Add company"}
+          {isPending ? "Saving..." : company ? "Save changes" : "Add company"}
         </button>
       </div>
     </form>
