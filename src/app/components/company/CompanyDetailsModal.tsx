@@ -48,7 +48,6 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  // Bij sluiten altijd terug naar "bekijken", anders opent het volgende bedrijf in edit-modus
   const handleClose = () => {
     setIsEditing(false);
     onClose();

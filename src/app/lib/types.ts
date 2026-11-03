@@ -46,7 +46,6 @@ export type CompanyRowProps = {
 export type CompanyDetailsModalProps = {
   company: Company | null;
   onClose: () => void;
-  onEdit: () => void;
 };
 
 export type CompanyListProps = {

@@ -8,18 +8,15 @@ import { Company, CompanyListProps } from "@/src/app/lib/types";
 import { useState } from "react";
 
 const CompanyList = ({ companies }: CompanyListProps) => {
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const selectedCompany = companies.find((company) => company.id === selectedId) ?? null;
 
   const openDetails = (company: Company) => {
-    setSelectedCompany(company);
+    setSelectedId(company.id);
   };
 
   const closeDetails = () => {
-    setSelectedCompany(null);
-  };
-
-  const editDetails = () => {
-    // updateCompanyDetails();
+    setSelectedId(null);
   };
 
   return (
@@ -34,7 +31,7 @@ const CompanyList = ({ companies }: CompanyListProps) => {
           </li>
         ))}
       </ul>
-      <CompanyDetailsModal company={selectedCompany} onClose={closeDetails} onEdit={editDetails} />
+      <CompanyDetailsModal company={selectedCompany} onClose={closeDetails} />
     </>
   );
 };
