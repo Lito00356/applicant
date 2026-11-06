@@ -23,7 +23,7 @@ const Modal = ({ open, onClose, onEdit, title, children }: ModalProps) => {
       }}
       className="m-auto w-[calc(100%-2rem)] max-w-2xl rounded-2xl p-0 shadow-xl backdrop:bg-slate-950/50"
     >
-      <div className="max-h-[85vh] overflow-y-auto p-5 sm:p-8">
+      <div className="max-h-[85vh] overflow-y-auto overscroll-contain p-5 sm:p-8">
         <div className="mb-6 flex items-start justify-between gap-4">
           <h2 className="min-w-0 break-words text-xl font-semibold tracking-tight sm:text-2xl">{title}</h2>
           <div className="flex shrink-0 items-center gap-2">

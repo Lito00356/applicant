@@ -54,6 +54,11 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  /* Zolang er een modal open is, scrollt de pagina erachter niet mee */
+  html:has(dialog[open]:modal) {
+    overflow: hidden;
+  }
 }
 
 body {
