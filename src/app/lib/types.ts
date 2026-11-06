@@ -1,16 +1,106 @@
-export type Status = "toContact" | "stretch" | "pending" | "interview" | "offer" | "rejected";
+import type { ReactNode } from "react";
+import type { APPLICATION_METHODS, FILTERS, FOLLOW_UP_METHODS, FOLLOW_UP_OUTCOMES, STATUSES } from "@/src/app/lib/constants";
+
+export type Status = (typeof STATUSES)[number];
+export type ApplicationMethod = (typeof APPLICATION_METHODS)[number];
+export type FollowUpMethod = (typeof FOLLOW_UP_METHODS)[number];
+export type FollowUpOutcome = (typeof FOLLOW_UP_OUTCOMES)[number];
+export type Filter = (typeof FILTERS)[number]["value"];
 
 export type Company = {
   id: number;
   name: string;
   role: string;
-  location: string;
+  location: string | null;
   status: Status;
-  jobUrl: string;
+  jobUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  applicationMethod: ApplicationMethod | null;
+  isSpontaneous: boolean;
+  followUpMethod: FollowUpMethod | null;
+  followUpOutcome: FollowUpOutcome | null;
+  followUpAt: string | null;
+  followUpNote: string | null;
+  rejectionReason: string | null;
+  cons: string | null;
+  websiteUrl: string | null;
 };
 
 export type FilterButtonProps = {
-  filter: string;
+  label: string;
+  color: string;
   isActive: boolean;
-  index: number;
+  onClick: () => void;
+};
+
+export type CompanyBoardProps = {
+  companies: Company[];
+};
+
+export type CompanyRowProps = {
+  company: Company;
+  onOpen: (company: Company) => void;
+};
+
+export type CompanyDetailsModalProps = {
+  company: Company | null;
+  onClose: () => void;
+};
+
+export type CompanyListProps = {
+  companies: Company[];
+};
+
+export type RegisterState = {
+  error: string;
+  name: string;
+  email: string;
+} | null;
+
+export type LoginState = {
+  error: string;
+  email: string;
+} | null;
+
+export type CompanyFormValues = {
+  name: string;
+  role: string;
+  location: string;
+  status: string;
+  jobUrl: string;
+  websiteUrl: string;
+  applicationMethod: string;
+  isSpontaneous: boolean;
+  cons: string;
+  rejectionReason: string;
+};
+
+export type CompanyFormState = { success: true } | { success: false; error: string; values: CompanyFormValues } | null;
+
+export type CompanyFormProps = {
+  action: (prevState: CompanyFormState, formData: FormData) => Promise<CompanyFormState>;
+  company?: Company;
+  onSuccess: () => void;
+  onCancel: () => void;
+};
+
+export type ModalProps = {
+  open: boolean;
+  onClose: () => void;
+  onEdit?: () => void;
+  title: string;
+  children: ReactNode;
+};
+
+export type CurrentUser = {
+  id: number;
+  name: string;
+  email: string;
+};
+
+export type PaginationTypes = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 };
