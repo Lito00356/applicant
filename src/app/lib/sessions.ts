@@ -3,6 +3,7 @@ import { CurrentUser } from "@/src/app/lib/types";
 import { randomBytes } from "crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { cache } from "react";
 
 const SESSION_COOKIE = "session";
@@ -33,6 +34,8 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   const token = cookieStore.get(SESSION_COOKIE)?.value;
 
   if (!token) return null;
+
+  await connection();
 
   const row = await db("sessions")
     .join("users", "users.id", "sessions.user_id")
