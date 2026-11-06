@@ -98,3 +98,9 @@ export type CurrentUser = {
   name: string;
   email: string;
 };
+
+export type PaginationTypes = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+};

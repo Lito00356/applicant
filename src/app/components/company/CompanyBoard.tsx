@@ -6,6 +6,7 @@ import CompanyList from "@/src/app/components/company/CompanyList";
 import FilterButton from "@/src/app/components/filters/FilterButton";
 import { FILTERS, PAGE_SIZE, ROW_GRID } from "@/src/app/lib/constants";
 import { CompanyBoardProps, Filter } from "@/src/app/lib/types";
+import Pagination from "@/src/app/components/ui/Pagination";
 
 const tableTitles = ["Company", "Function", "Location", "Application status", "Vacature"];
 
@@ -16,8 +17,9 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
   const visibleCompanies =
     activeFilter === "all" ? companies : companies.filter((company) => company.status === activeFilter);
 
-  const pages = Math.ceil(Math.max(1, visibleCompanies.length / PAGE_SIZE));
-  const start = (currentPage - 1) * PAGE_SIZE;
+  const totalPages = Math.max(1, Math.ceil(visibleCompanies.length / PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const start = (safePage - 1) * PAGE_SIZE;
   const end = start + PAGE_SIZE;
   const displayedCompanies = visibleCompanies.slice(start, end);
 
@@ -32,7 +34,10 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
                 label={filter.label}
                 color={filter.color}
                 isActive={activeFilter === filter.value}
-                onClick={() => setActiveFilter(filter.value)}
+                onClick={() => {
+                  setActiveFilter(filter.value);
+                  setCurrentPage(1);
+                }}
               />
             </li>
           ))}
@@ -44,7 +49,6 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
         className="relative flex flex-1 flex-col overflow-x-auto rounded-b-xl rounded-tr-xl bg-surface px-3 pb-20 pt-3 sm:px-5 sm:pt-5"
       >
         <div className="md:min-w-190">
-          {/* Kolomtitels alleen bij de tabelweergave */}
           <div className="hidden md:block">
             <div className={`${ROW_GRID} px-3 pb-4`}>
               {tableTitles.map((title) => (
@@ -62,6 +66,10 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
           )}
         </div>
 
+        {/* Onderaan in het midden, op dezelfde hoogte als de +-knop */}
+        <div className="absolute inset-x-0 bottom-5 flex h-10 items-center justify-center">
+          <Pagination currentPage={safePage} totalPages={totalPages} onPageChange={setCurrentPage} />
+        </div>
         <div className="absolute bottom-5 right-5">
           <AddCompanyButton />
         </div>

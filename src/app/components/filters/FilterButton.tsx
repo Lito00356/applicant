@@ -2,7 +2,6 @@
 
 import { FilterButtonProps } from "@/src/app/lib/types";
 
-// Een tab zoals op een map: de actieve tab is hoger en breder en "plakt" aan de kaart.
 const FilterButton = ({ label, color, isActive, onClick }: FilterButtonProps) => {
   return (
     <button
