@@ -4,16 +4,22 @@ import { useState } from "react";
 import AddCompanyButton from "@/src/app/components/companiesCRUD/AddCompanyButton";
 import CompanyList from "@/src/app/components/company/CompanyList";
 import FilterButton from "@/src/app/components/filters/FilterButton";
-import { FILTERS, ROW_GRID } from "@/src/app/lib/constants";
+import { FILTERS, PAGE_SIZE, ROW_GRID } from "@/src/app/lib/constants";
 import { CompanyBoardProps, Filter } from "@/src/app/lib/types";
 
 const tableTitles = ["Company", "Function", "Location", "Application status", "Vacature"];
 
 const CompanyBoard = ({ companies }: CompanyBoardProps) => {
   const [activeFilter, setActiveFilter] = useState<Filter>("toContact");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const visibleCompanies =
     activeFilter === "all" ? companies : companies.filter((company) => company.status === activeFilter);
+
+  const pages = Math.ceil(Math.max(1, visibleCompanies.length / PAGE_SIZE));
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const displayedCompanies = visibleCompanies.slice(start, end);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -50,7 +56,7 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
           </div>
 
           {visibleCompanies.length > 0 ? (
-            <CompanyList companies={visibleCompanies} />
+            <CompanyList companies={displayedCompanies} />
           ) : (
             <p className="px-3 py-6 text-sm text-slate-500">No companies here yet.</p>
           )}

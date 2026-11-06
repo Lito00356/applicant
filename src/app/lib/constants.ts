@@ -53,3 +53,5 @@ export const followUpOutcomeLabels = {
   replied: "Replied",
   invited: "Invited",
 } satisfies Record<(typeof FOLLOW_UP_OUTCOMES)[number], string>;
+
+export const PAGE_SIZE = 18;
