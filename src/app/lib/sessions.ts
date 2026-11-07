@@ -40,7 +40,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   const row = await db("sessions")
     .join("users", "users.id", "sessions.user_id")
     .where("sessions.id", token)
-    .select("users.id", "users.name", "users.email", "sessions.expires_at as expiresAt")
+    .select("users.id", "users.name", "users.email", "users.created_at as createdAt", "sessions.expires_at as expiresAt")
     .first();
 
   if (!row) return null;
@@ -51,7 +51,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     return null;
   }
 
-  return { id: row.id, name: row.name, email: row.email };
+  return { id: row.id, name: row.name, email: row.email, createdAt: row.createdAt };
 });
 
 export async function requireUser(): Promise<CurrentUser> {

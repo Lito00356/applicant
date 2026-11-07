@@ -97,10 +97,15 @@ export type CurrentUser = {
   id: number;
   name: string;
   email: string;
+  createdAt: string;
 };
 
 export type PaginationTypes = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+};
+
+export type ElapsedTimerProps = {
+  startDate: number;
 };

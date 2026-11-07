@@ -1,6 +1,6 @@
 // SQLite geeft datums terug als tekst, bv. "2026-10-16 14:25:32".
 // CURRENT_TIMESTAMP (created_at/updated_at) is UTC; zelf ingevulde datums zijn lokale tijd.
-function parseSqliteDate(value: string, isUtc: boolean): Date {
+export function parseSqliteDate(value: string, isUtc: boolean): Date {
   const iso = value.replace(" ", "T");
   return new Date(isUtc && !iso.endsWith("Z") ? `${iso}Z` : iso);
 }

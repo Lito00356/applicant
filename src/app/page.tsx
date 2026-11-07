@@ -1,5 +1,5 @@
 import CompanyListLoader from "@/src/app/components/company/CompanyListLoader";
-import ElapsedTimer from "@/src/app/components/timer/ElapsedTimer";
+import TimerLoader from "@/src/app/components/timer/TimerLoader";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -10,7 +10,9 @@ export default function Home() {
           <h1 className="text-2xl font-semibold tracking-tight">Jobhunt</h1>
           <div className="flex items-baseline gap-1 text-sm text-slate-500">
             <span className="font-semibold text-slate-700">TWJ</span>
-            <ElapsedTimer />
+            <Suspense>
+              <TimerLoader />
+            </Suspense>
           </div>
         </header>
 

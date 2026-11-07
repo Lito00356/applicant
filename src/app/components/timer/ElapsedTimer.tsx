@@ -1,10 +1,10 @@
 "use client";
 
+import { ElapsedTimerProps } from "@/src/app/lib/types";
 import { useEffect, useState } from "react";
 
-const ElapsedTimer = () => {
+const ElapsedTimer = ({ startDate }: ElapsedTimerProps) => {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const startDate = 1782770400000;
 
   useEffect(() => {
     const interval = setInterval(() => {
