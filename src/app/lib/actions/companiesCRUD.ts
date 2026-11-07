@@ -95,3 +95,16 @@ export async function updateCompanyDetails(
   revalidatePath("/");
   return { success: true };
 }
+
+export async function deleteCompany(companyId: number): Promise<{ success: boolean }> {
+  const user = await requireUser();
+
+  const deletedRows = await db("companies").where({ id: companyId, user_id: user.id }).del();
+
+  if (deletedRows === 0) {
+    return { success: false };
+  }
+
+  revalidatePath("/");
+  return { success: true };
+}

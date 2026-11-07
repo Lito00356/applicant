@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useTransition, type ReactNode } from "react";
 import CompanyForm from "@/src/app/components/companiesCRUD/CompanyForm";
 import Modal from "@/src/app/components/ui/Modal";
-import { updateCompanyDetails } from "@/src/app/lib/actions/companiesCRUD";
+import { deleteCompany, updateCompanyDetails } from "@/src/app/lib/actions/companiesCRUD";
 import {
   applicationMethodLabels,
   followUpMethodLabels,
@@ -12,7 +12,7 @@ import {
   statusLabels,
 } from "@/src/app/lib/constants";
 import { formatDate, formatDateTime } from "@/src/app/lib/format";
-import { CompanyDetailsModalProps } from "@/src/app/lib/types";
+import { Company, CompanyDetailsModalProps } from "@/src/app/lib/types";
 
 const Empty = () => <span className="text-slate-400">—</span>;
 
@@ -47,10 +47,24 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 
 const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, startDeleting] = useTransition();
+  const [deleteFailed, setDeleteFailed] = useState(false);
 
   const handleClose = () => {
     setIsEditing(false);
+    setDeleteFailed(false);
     onClose();
+  };
+
+  // Na een geslaagde delete verdwijnt het bedrijf uit de lijst en sluit de modal vanzelf
+  const handleDelete = (company: Company) => {
+    if (!confirm(`Delete ${company.name}? This cannot be undone.`)) return;
+
+    setDeleteFailed(false);
+    startDeleting(async () => {
+      const result = await deleteCompany(company.id);
+      if (!result.success) setDeleteFailed(true);
+    });
   };
 
   return (
@@ -120,10 +134,23 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
             </DetailItem>
           </Section>
 
-          <p className="border-t border-slate-100 pt-4 text-xs text-slate-400">
-            Added {formatDate(company.createdAt, { isUtc: true })} · Last updated{" "}
-            {formatDate(company.updatedAt, { isUtc: true })}
-          </p>
+          <div className="flex items-center justify-between gap-4 border-t border-slate-100 pt-4">
+            <p className="text-xs text-slate-400">
+              Added {formatDate(company.createdAt, { isUtc: true })} · Last updated{" "}
+              {formatDate(company.updatedAt, { isUtc: true })}
+            </p>
+            <button
+              type="button"
+              onClick={() => handleDelete(company)}
+              disabled={isDeleting}
+              className="shrink-0 rounded-full border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 transition-colors hover:border-red-600 hover:bg-red-600 hover:text-white disabled:opacity-50"
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+          {deleteFailed && (
+            <p className="-mt-4 text-right text-sm text-red-600">Could not delete this company. Try again.</p>
+          )}
         </div>
       )}
     </Modal>
