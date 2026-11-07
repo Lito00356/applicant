@@ -1,4 +1,5 @@
 import CompanyListLoader from "@/src/app/components/company/CompanyListLoader";
+import HamburgerMenu from "@/src/app/components/menu/HamburgerMenu";
 import TimerLoader from "@/src/app/components/timer/TimerLoader";
 import { Suspense } from "react";
 
@@ -6,13 +7,16 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-canvas px-4 py-6 text-slate-950 sm:px-8">
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <header className="mb-6 flex items-baseline justify-between gap-4 text-slate-950">
+        <header className="mb-6 flex items-center justify-between gap-4 text-slate-950">
           <h1 className="text-2xl font-semibold tracking-tight">Jobhunt</h1>
-          <div className="flex items-baseline gap-1 text-sm text-slate-500">
-            <span className="font-semibold text-slate-700">TWJ</span>
-            <Suspense>
-              <TimerLoader />
-            </Suspense>
+          <div className="flex items-center gap-3">
+            <div className="flex items-baseline gap-1 text-sm text-slate-500">
+              <span className="font-semibold text-slate-700">TWJ</span>
+              <Suspense>
+                <TimerLoader />
+              </Suspense>
+            </div>
+            <HamburgerMenu />
           </div>
         </header>
 

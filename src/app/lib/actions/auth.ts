@@ -3,7 +3,7 @@
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { db } from "@/src/app/lib/db";
-import { createSession } from "@/src/app/lib/sessions";
+import { createSession, deleteSession } from "@/src/app/lib/sessions";
 import { LoginState, RegisterState } from "@/src/app/lib/types";
 
 export async function register(prevState: RegisterState, formData: FormData): Promise<RegisterState> {
@@ -60,4 +60,9 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
 
   await createSession(user.id);
   redirect("/");
+}
+
+export async function logout(): Promise<void> {
+  await deleteSession();
+  redirect("/login");
 }

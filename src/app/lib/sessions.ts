@@ -54,6 +54,18 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   return { id: row.id, name: row.name, email: row.email, createdAt: row.createdAt };
 });
 
+// Verwijdert de sessie uit de database én de cookie uit de browser
+export async function deleteSession(): Promise<void> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE)?.value;
+
+  if (token) {
+    await db("sessions").where("id", token).del();
+  }
+
+  cookieStore.delete(SESSION_COOKIE);
+}
+
 export async function requireUser(): Promise<CurrentUser> {
   const user = await getCurrentUser();
 
