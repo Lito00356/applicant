@@ -55,3 +55,7 @@ export const followUpOutcomeLabels = {
 } satisfies Record<(typeof FOLLOW_UP_OUTCOMES)[number], string>;
 
 export const PAGE_SIZE = 18;
+
+// Toasts die verschijnen terwijl een modal open is, moeten naar de toaster ín de modal.
+// Een <dialog> ligt in de "top layer" van de browser, boven alles, ook boven de gewone toaster.
+export const MODAL_TOASTER = "modal";

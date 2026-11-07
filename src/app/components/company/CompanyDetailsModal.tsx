@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, type ReactNode } from "react";
+import { toast } from "sonner";
 import CompanyForm from "@/src/app/components/companiesCRUD/CompanyForm";
 import Modal from "@/src/app/components/ui/Modal";
 import { deleteCompany, updateCompanyDetails } from "@/src/app/lib/actions/companiesCRUD";
@@ -8,6 +9,7 @@ import {
   applicationMethodLabels,
   followUpMethodLabels,
   followUpOutcomeLabels,
+  MODAL_TOASTER,
   statusColors,
   statusLabels,
 } from "@/src/app/lib/constants";
@@ -48,22 +50,29 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, startDeleting] = useTransition();
-  const [deleteFailed, setDeleteFailed] = useState(false);
 
   const handleClose = () => {
     setIsEditing(false);
-    setDeleteFailed(false);
     onClose();
+  };
+
+  const handleSaved = () => {
+    setIsEditing(false);
+    // De modal blijft open, dus de toast moet naar de toaster ín de modal
+    toast.success("Changes saved", { toasterId: MODAL_TOASTER });
   };
 
   // Na een geslaagde delete verdwijnt het bedrijf uit de lijst en sluit de modal vanzelf
   const handleDelete = (company: Company) => {
     if (!confirm(`Delete ${company.name}? This cannot be undone.`)) return;
 
-    setDeleteFailed(false);
     startDeleting(async () => {
       const result = await deleteCompany(company.id);
-      if (!result.success) setDeleteFailed(true);
+      if (result.success) {
+        toast.success(`${company.name} deleted`);
+      } else {
+        toast.error("Could not delete this company. Try again.", { toasterId: MODAL_TOASTER });
+      }
     });
   };
 
@@ -78,7 +87,7 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
         <CompanyForm
           action={updateCompanyDetails.bind(null, company.id)}
           company={company}
-          onSuccess={() => setIsEditing(false)}
+          onSuccess={handleSaved}
           onCancel={() => setIsEditing(false)}
         />
       )}
@@ -148,9 +157,6 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
               {isDeleting ? "Deleting..." : "Delete"}
             </button>
           </div>
-          {deleteFailed && (
-            <p className="-mt-4 text-right text-sm text-red-600">Could not delete this company. Try again.</p>
-          )}
         </div>
       )}
     </Modal>

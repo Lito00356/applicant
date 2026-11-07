@@ -1,6 +1,7 @@
 "use client";
 
 import { useOptimistic, useState, useTransition } from "react";
+import { toast } from "sonner";
 import { updateCompanyStatus } from "@/src/app/lib/actions/companiesCRUD";
 import { STATUSES, statusColors, statusLabels } from "@/src/app/lib/constants";
 import { CompanyRowProps, Status } from "@/src/app/lib/types";
@@ -16,7 +17,10 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
     startTransition(async () => {
       setOptimisticStatus(newStatus);
       const result = await updateCompanyStatus(company.id, newStatus);
-      if (!result.success) setHasError(true);
+      if (!result.success) {
+        setHasError(true);
+        toast.error(`Could not update the status of ${company.name}`);
+      }
     });
   };
 

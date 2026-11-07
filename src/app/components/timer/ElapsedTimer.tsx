@@ -20,7 +20,7 @@ const ElapsedTimer = ({ startDate }: ElapsedTimerProps) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [startDate]);
 
   return (
     <span>

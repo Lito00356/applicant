@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import CompanyForm from "@/src/app/components/companiesCRUD/CompanyForm";
 import Modal from "@/src/app/components/ui/Modal";
 import { createCompany } from "@/src/app/lib/actions/companiesCRUD";
@@ -22,7 +23,14 @@ const AddCompanyButton = () => {
 
       <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Add company">
         {isOpen && (
-          <CompanyForm action={createCompany} onSuccess={() => setIsOpen(false)} onCancel={() => setIsOpen(false)} />
+          <CompanyForm
+            action={createCompany}
+            onSuccess={() => {
+              setIsOpen(false);
+              toast.success("Company created");
+            }}
+            onCancel={() => setIsOpen(false)}
+          />
         )}
       </Modal>
     </>
