@@ -85,9 +85,11 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           </div>
 
           <Section title="Vacancy">
-            <DetailItem label="Job URL">{company.jobUrl && <ExternalLink href={company.jobUrl} />}</DetailItem>
-            <DetailItem label="Company website">
+            <DetailItem label="Company website" wide>
               {company.websiteUrl && <ExternalLink href={company.websiteUrl} />}
+            </DetailItem>
+            <DetailItem label="Job URL" wide>
+              {company.jobUrl && <ExternalLink href={company.jobUrl} />}
             </DetailItem>
           </Section>
 

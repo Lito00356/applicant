@@ -50,7 +50,7 @@ const Modal = ({ open, onClose, onEdit, title, children }: ModalProps) => {
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="rounded-full px-2 text-xl leading-none text-slate-400 hover:text-slate-950"
+              className="rounded-full px-2 text-2xl leading-none text-slate-400 hover:text-slate-950"
             >
               ×
             </button>

@@ -51,11 +51,6 @@ const CompanyForm = ({ action, company, onSuccess, onCancel }: CompanyFormProps)
         </label>
 
         <label className={labelClass}>
-          Job URL
-          <input name="jobUrl" type="url" placeholder="https://" defaultValue={values?.jobUrl} className={inputClass} />
-        </label>
-
-        <label className={`${labelClass} sm:col-span-2`}>
           Company website
           <input
             name="websiteUrl"
@@ -64,6 +59,11 @@ const CompanyForm = ({ action, company, onSuccess, onCancel }: CompanyFormProps)
             defaultValue={values?.websiteUrl}
             className={inputClass}
           />
+        </label>
+
+        <label className={`${labelClass} sm:col-span-2`}>
+          Job URL
+          <input name="jobUrl" type="url" placeholder="https://" defaultValue={values?.jobUrl} className={inputClass} />
         </label>
       </fieldset>
 
