@@ -69,7 +69,7 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
     startDeleting(async () => {
       const result = await deleteCompany(company.id);
       if (result.success) {
-        toast.success(`${company.name} deleted`);
+        toast.success(`${company.name} has been deleted`);
       } else {
         toast.error("Could not delete this company. Try again.", { toasterId: MODAL_TOASTER });
       }
