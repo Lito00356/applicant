@@ -14,8 +14,9 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
   const [activeFilter, setActiveFilter] = useState<Filter>("toContact");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const visibleCompanies =
-    activeFilter === "all" ? companies : companies.filter((company) => company.status === activeFilter);
+  const visibleCompanies = (
+    activeFilter === "all" ? companies : companies.filter((company) => company.status === activeFilter)
+  ).toSorted((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 
   const totalPages = Math.max(1, Math.ceil(visibleCompanies.length / PAGE_SIZE));
   const safePage = Math.min(currentPage, totalPages);
