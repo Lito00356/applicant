@@ -4,11 +4,9 @@ import { useState } from "react";
 import AddCompanyButton from "@/src/app/components/companiesCRUD/AddCompanyButton";
 import CompanyList from "@/src/app/components/company/CompanyList";
 import FilterButton from "@/src/app/components/filters/FilterButton";
-import { FILTERS, PAGE_SIZE, ROW_GRID } from "@/src/app/lib/constants";
+import { FILTERS, PAGE_SIZE, ROW_GRID, TABLE_TITLES } from "@/src/app/lib/constants";
 import { CompanyBoardProps, Filter } from "@/src/app/lib/types";
 import Pagination from "@/src/app/components/ui/Pagination";
-
-const tableTitles = ["Company", "Function", "Location", "Application status", "Vacature"];
 
 const CompanyBoard = ({ companies }: CompanyBoardProps) => {
   const [activeFilter, setActiveFilter] = useState<Filter>("toContact");
@@ -52,7 +50,7 @@ const CompanyBoard = ({ companies }: CompanyBoardProps) => {
         <div className="md:min-w-190">
           <div className="hidden md:block">
             <div className={`${ROW_GRID} px-3 pb-4`}>
-              {tableTitles.map((title) => (
+              {TABLE_TITLES.map((title) => (
                 <div key={title} className="text-base font-semibold text-slate-950">
                   {title}
                 </div>

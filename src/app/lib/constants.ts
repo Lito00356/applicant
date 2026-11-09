@@ -1,4 +1,4 @@
-export const STATUSES = ["toContact", "stretch", "pending", "interview", "offer", "rejected"] as const;
+export const STATUSES = ["toContact", "stretch", "pending", "interview", "offer", "rejected", "archived"] as const;
 export const APPLICATION_METHODS = ["email", "website", "job_platform", "phone", "recruiter"] as const;
 export const FOLLOW_UP_METHODS = ["email", "phone"] as const;
 export const FOLLOW_UP_OUTCOMES = ["no_answer", "replied", "invited"] as const;
@@ -10,6 +10,7 @@ export const statusLabels = {
   interview: "Interview",
   offer: "Offer",
   rejected: "Rejected",
+  archived: "Archived",
 } satisfies Record<(typeof STATUSES)[number], string>;
 
 // Achtergrondkleur per status (klassen uit globals.css).
@@ -20,11 +21,15 @@ export const statusColors = {
   interview: "bg-interview",
   offer: "bg-offer",
   rejected: "bg-rejected",
+  archived: "bg-archived",
 } satisfies Record<(typeof STATUSES)[number], string>;
 
 // Kolommen van de tabel: koppen en rijen gebruiken hetzelfde raster.
 // Op gsm: 2 kolommen (info | status). Vanaf md: de volledige tabel met 5 kolommen.
 export const ROW_GRID = "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:grid-cols-5";
+
+// Kolomkoppen van de tabel, gedeeld door het overzicht en het archief.
+export const TABLE_TITLES = ["Company", "Function", "Location", "Application status", "Vacature"];
 
 // De filtertabs boven de tabel. "all" toont alles, de rest filtert op status.
 export const FILTERS = [
@@ -32,6 +37,8 @@ export const FILTERS = [
   { value: "stretch", label: "Long shot", color: "bg-long-shot" },
   { value: "pending", label: "Pending", color: "bg-pending" },
   { value: "rejected", label: "Rejected by", color: "bg-rejected" },
+  { value: "interview", label: "Interview", color: "bg-interview" },
+  { value: "offer", label: "Offer", color: "bg-offer" },
   { value: "all", label: "All", color: "bg-all" },
 ] as const;
 

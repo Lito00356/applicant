@@ -46,8 +46,15 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
             isPending ? "opacity-60" : ""
           } ${hasError ? "ring-2 ring-red-600" : ""}`}
         >
+          {/* In het archief toont "Archived" nog als huidige waarde, maar je kan het niet opnieuw kiezen */}
           {STATUSES.map((value) => (
-            <option key={value} value={value} className="bg-white">
+            <option
+              key={value}
+              value={value}
+              disabled={value === "archived" && company.status === "archived"}
+              hidden={value === "archived" && company.status === "archived"}
+              className="bg-white"
+            >
               {statusLabels[value]}
             </option>
           ))}

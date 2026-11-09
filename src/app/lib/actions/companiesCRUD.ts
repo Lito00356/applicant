@@ -7,6 +7,12 @@ import { companySchema, statusUpdateSchema } from "@/src/app/lib/schemas";
 import { requireUser } from "@/src/app/lib/sessions";
 import { CompanyFormState, Status } from "@/src/app/lib/types";
 
+// Het overzicht én het archief tonen bedrijven, dus beide pagina's moeten vers opgehaald worden
+function revalidateCompanyPages() {
+  revalidatePath("/");
+  revalidatePath("/archive");
+}
+
 export async function createCompany(_prevState: CompanyFormState, formData: FormData): Promise<CompanyFormState> {
   const user = await requireUser();
 
@@ -33,7 +39,7 @@ export async function createCompany(_prevState: CompanyFormState, formData: Form
     rejection_reason: company.rejectionReason,
   });
 
-  revalidatePath("/");
+  revalidateCompanyPages();
   return { success: true };
 }
 
@@ -54,7 +60,7 @@ export async function updateCompanyStatus(companyId: number, status: Status): Pr
     return { success: false };
   }
 
-  revalidatePath("/");
+  revalidateCompanyPages();
   return { success: true };
 }
 
@@ -92,7 +98,7 @@ export async function updateCompanyDetails(
     return { success: false, error: "Company not found", values };
   }
 
-  revalidatePath("/");
+  revalidateCompanyPages();
   return { success: true };
 }
 
@@ -105,6 +111,6 @@ export async function deleteCompany(companyId: number): Promise<{ success: boole
     return { success: false };
   }
 
-  revalidatePath("/");
+  revalidateCompanyPages();
   return { success: true };
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { logout } from "@/src/app/lib/actions/auth";
 
@@ -9,6 +10,7 @@ const itemClass = "block w-full rounded-lg px-3 py-2 text-left text-sm text-slat
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const isArchive = usePathname() === "/archive";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -44,8 +46,9 @@ const HamburgerMenu = () => {
 
       {isOpen && (
         <div className="absolute right-0 top-full z-10 mt-2 w-44 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
-          <Link href="/archive" onClick={() => setIsOpen(false)} className={itemClass}>
-            Archive
+          {/* Op het archief verwijst de link terug naar het overzicht, anders naar het archief */}
+          <Link href={isArchive ? "/" : "/archive"} onClick={() => setIsOpen(false)} className={itemClass}>
+            {isArchive ? "Overview" : "Archive"}
           </Link>
           <form action={logout}>
             <button type="submit" className={`${itemClass} text-red-600 hover:bg-red-50`}>

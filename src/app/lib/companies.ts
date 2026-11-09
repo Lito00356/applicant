@@ -2,7 +2,8 @@ import { db } from "@/src/app/lib/db";
 import { requireUser } from "@/src/app/lib/sessions";
 import { Company } from "@/src/app/lib/types";
 
-export async function getCompanies(): Promise<Company[]> {
+// Standaard zonder gearchiveerde bedrijven; met { archived: true } enkel de gearchiveerde.
+export async function getCompanies({ archived = false } = {}): Promise<Company[]> {
   const user = await requireUser();
   const companies = await db("companies")
     .select(
@@ -25,6 +26,7 @@ export async function getCompanies(): Promise<Company[]> {
       "website_url as websiteUrl",
     )
     .where("user_id", user.id)
+    .andWhere("status", archived ? "=" : "<>", "archived")
     .orderBy([{ column: "created_at" }, { column: "id" }]);
 
   return companies.map((company) => ({

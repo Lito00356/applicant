@@ -17,6 +17,7 @@
   --interview: #b9d4ff;
   --offer: #c3f5b0;
   --rejected: #ff7979;
+  --archived: #cbd5e1;
 
   /* Knoppen */
   --add: #c1ff9b;
@@ -36,6 +37,7 @@
   --color-interview: var(--interview);
   --color-offer: var(--offer);
   --color-rejected: var(--rejected);
+  --color-archived: var(--archived);
   --color-add: var(--add);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
