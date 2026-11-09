@@ -3,7 +3,8 @@ import type { Knex } from "knex";
 const config: Knex.Config = {
   client: "better-sqlite3",
   connection: {
-    filename: "./db/applicant.sqlite3",
+    // Met DB_FILE kan je een andere database gebruiken (bv. een demo-db voor screenshots)
+    filename: process.env.DB_FILE ?? "./db/applicant.sqlite3",
   },
   useNullAsDefault: true,
   pool: {
