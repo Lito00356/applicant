@@ -12,6 +12,7 @@ export function readCompanyForm(formData: FormData): CompanyFormValues {
     status: getText(formData, "status"),
     jobUrl: getText(formData, "jobUrl"),
     websiteUrl: getText(formData, "websiteUrl"),
+    phoneNumber: getText(formData, "phoneNumber"),
     applicationMethod: getText(formData, "applicationMethod"),
     isSpontaneous: formData.get("isSpontaneous") === "on",
     cons: getText(formData, "cons"),

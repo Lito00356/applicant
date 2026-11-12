@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect } from "react";
 import { APPLICATION_METHODS, applicationMethodLabels, STATUSES, statusLabels } from "@/src/app/lib/constants";
+import { DEFAULT_JOB_URL_TEXT } from "@/src/app/lib/format";
 import { Company, CompanyFormProps, CompanyFormValues } from "@/src/app/lib/types";
 
 const labelClass = "flex flex-col gap-1 text-sm font-medium text-slate-700";
@@ -14,6 +15,7 @@ const toFormValues = (company: Company): CompanyFormValues => ({
   status: company.status,
   jobUrl: company.jobUrl ?? "",
   websiteUrl: company.websiteUrl ?? "",
+  phoneNumber: company.phoneNumber ?? "",
   applicationMethod: company.applicationMethod ?? "",
   isSpontaneous: company.isSpontaneous,
   cons: company.cons ?? "",
@@ -45,11 +47,7 @@ const CompanyForm = ({ action, company, onSuccess, onCancel }: CompanyFormProps)
           <input name="role" type="text" required defaultValue={values?.role} className={inputClass} />
         </label>
 
-        <label className={labelClass}>
-          Location
-          <input name="location" type="text" defaultValue={values?.location} className={inputClass} />
-        </label>
-
+        {/* Website en telefoon staan samen op één rij (vanaf sm) */}
         <label className={labelClass}>
           Company website
           <input
@@ -61,9 +59,31 @@ const CompanyForm = ({ action, company, onSuccess, onCancel }: CompanyFormProps)
           />
         </label>
 
-        <label className={`${labelClass} sm:col-span-2`}>
+        <label className={labelClass}>
+          Phone number
+          <input
+            name="phoneNumber"
+            type="tel"
+            placeholder="+32 ..."
+            defaultValue={values?.phoneNumber}
+            className={inputClass}
+          />
+        </label>
+
+        <label className={labelClass}>
+          Location
+          <input name="location" type="text" defaultValue={values?.location} className={inputClass} />
+        </label>
+
+        <label className={labelClass}>
           Job URL
-          <input name="jobUrl" type="url" placeholder="https://" defaultValue={values?.jobUrl} className={inputClass} />
+          <input
+            name="jobUrl"
+            type="text"
+            placeholder={`https://... (empty = ${DEFAULT_JOB_URL_TEXT})`}
+            defaultValue={values?.jobUrl}
+            className={inputClass}
+          />
         </label>
       </fieldset>
 

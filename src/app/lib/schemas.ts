@@ -14,8 +14,13 @@ export const companySchema = z.object({
     (value) => (value === "" ? undefined : value),
     z.enum(STATUSES, { error: "Choose a valid status." }).default("toContact"),
   ),
-  jobUrl: optional(httpUrl("The job URL must be a valid http(s) link.")),
+  // Vrije tekst: een link of bv. "Spontaneous application"
+  jobUrl: optional(z.string()),
   websiteUrl: optional(httpUrl("The website URL must be a valid http(s) link.")),
+  // Cijfers met eventueel +, spaties, punten, streepjes, haakjes of slashes; minstens 6 tekens
+  phoneNumber: optional(
+    z.string().regex(/^\+?[\d\s()./-]{6,}$/, { error: "The phone number may only contain digits, spaces and + - . / ( )." }),
+  ),
   applicationMethod: optional(z.enum(APPLICATION_METHODS, { error: "Choose a valid application method." })),
   isSpontaneous: z.boolean(),
   cons: optional(z.string()),
@@ -24,7 +29,14 @@ export const companySchema = z.object({
 
 export type CompanyInput = z.infer<typeof companySchema>;
 
-export const statusUpdateSchema = z.object({
-  companyId: z.number().int().positive(),
-  status: z.enum(STATUSES),
-});
+export const statusUpdateSchema = z
+  .object({
+    companyId: z.number().int().positive(),
+    status: z.enum(STATUSES),
+    rejectionReason: z.string().trim().min(1).optional(),
+  })
+  // Naar "rejected" mag enkel met een reden erbij
+  .refine((data) => data.status !== "rejected" || data.rejectionReason !== undefined, {
+    error: "A rejection reason is required.",
+    path: ["rejectionReason"],
+  });

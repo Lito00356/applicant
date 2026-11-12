@@ -2,21 +2,24 @@
 
 import { useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
+import RejectionReasonModal from "@/src/app/components/company/RejectionReasonModal";
 import { updateCompanyStatus } from "@/src/app/lib/actions/companiesCRUD";
 import { STATUSES, statusColors, statusLabels } from "@/src/app/lib/constants";
+import { DEFAULT_JOB_URL_TEXT, isHttpUrl } from "@/src/app/lib/format";
 import { CompanyRowProps, Status } from "@/src/app/lib/types";
 
 const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
   const [status, setOptimisticStatus] = useOptimistic(company.status);
   const [isPending, startTransition] = useTransition();
   const [hasError, setHasError] = useState(false);
+  const [isAskingReason, setIsAskingReason] = useState(false);
 
-  const changeStatus = (newStatus: Status) => {
+  const changeStatus = (newStatus: Status, rejectionReason?: string) => {
     setHasError(false);
 
     startTransition(async () => {
       setOptimisticStatus(newStatus);
-      const result = await updateCompanyStatus(company.id, newStatus);
+      const result = await updateCompanyStatus(company.id, newStatus, rejectionReason);
       if (!result.success) {
         setHasError(true);
         toast.error(`Could not update the status of ${company.name}`);
@@ -38,7 +41,15 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
       <div className="relative w-32 md:w-36">
         <select
           value={status}
-          onChange={(e) => changeStatus(e.target.value as Status)}
+          onChange={(e) => {
+            const newStatus = e.target.value as Status;
+            // Rejected gaat pas door nadat de reden is ingevuld; tot dan blijft de oude status staan
+            if (newStatus === "rejected") {
+              setIsAskingReason(true);
+            } else {
+              changeStatus(newStatus);
+            }
+          }}
           aria-label={`Status of ${company.name}`}
           aria-invalid={hasError}
           title={hasError ? "Could not save the status. Try again." : undefined}
@@ -68,12 +79,25 @@ const CompanyRow = ({ company, onOpen }: CompanyRowProps) => {
           <path d="M5 7l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2" />
         </svg>
       </div>
-      {company.jobUrl ? (
+      {company.jobUrl && isHttpUrl(company.jobUrl) ? (
         <a href={company.jobUrl} target="_blank" rel="noreferrer" className="hidden truncate hover:underline md:block">
           {company.jobUrl}
         </a>
       ) : (
-        <span className="hidden text-slate-400 md:block">–</span>
+        <span className="hidden truncate text-slate-500 md:block">{company.jobUrl ?? DEFAULT_JOB_URL_TEXT}</span>
+      )}
+      {/* Pas renderen wanneer nodig, zodat het tekstveld telkens vers begint */}
+      {isAskingReason && (
+        <RejectionReasonModal
+          open
+          companyName={company.name}
+          defaultReason={company.rejectionReason}
+          onCancel={() => setIsAskingReason(false)}
+          onConfirm={(reason) => {
+            setIsAskingReason(false);
+            changeStatus("rejected", reason);
+          }}
+        />
       )}
     </>
   );

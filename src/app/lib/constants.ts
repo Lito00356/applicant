@@ -63,6 +63,10 @@ export const followUpOutcomeLabels = {
 
 export const PAGE_SIZE = 18;
 
+// Rejected toont weekcontainers met elk een titel; die nemen ruimte in, dus minder bedrijven per pagina.
+// Weken worden nooit gesplitst: een pagina bevat enkel hele weken (zie paginateWeeks).
+export const REJECTED_PAGE_SIZE = 12;
+
 // Toasts die verschijnen terwijl een modal open is, moeten naar de toaster ín de modal.
 // Een <dialog> ligt in de "top layer" van de browser, boven alles, ook boven de gewone toaster.
 export const MODAL_TOASTER = "modal";

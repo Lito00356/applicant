@@ -15,6 +15,7 @@ export async function getCompanies({ archived = false } = {}): Promise<Company[]
       "job_url as jobUrl",
       "created_at as createdAt",
       "updated_at as updatedAt",
+      "rejected_at as rejectedAt",
       "application_method as applicationMethod",
       "is_spontaneous as isSpontaneous",
       "follow_up_method as followUpMethod",
@@ -24,6 +25,7 @@ export async function getCompanies({ archived = false } = {}): Promise<Company[]
       "rejection_reason as rejectionReason",
       "cons",
       "website_url as websiteUrl",
+      "phone_number as phoneNumber",
     )
     .where("user_id", user.id)
     .andWhere("status", archived ? "=" : "<>", "archived")

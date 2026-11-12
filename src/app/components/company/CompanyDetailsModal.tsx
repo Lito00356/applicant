@@ -13,7 +13,7 @@ import {
   statusColors,
   statusLabels,
 } from "@/src/app/lib/constants";
-import { formatDate, formatDateTime } from "@/src/app/lib/format";
+import { DEFAULT_JOB_URL_TEXT, formatDate, formatDateTime, isHttpUrl } from "@/src/app/lib/format";
 import { Company, CompanyDetailsModalProps } from "@/src/app/lib/types";
 
 const Empty = () => <span className="text-slate-400">—</span>;
@@ -108,11 +108,26 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
           </div>
 
           <Section title="Vacancy">
-            <DetailItem label="Company website" wide>
+            <DetailItem label="Company website">
               {company.websiteUrl && <ExternalLink href={company.websiteUrl} />}
             </DetailItem>
+            <DetailItem label="Phone number">
+              {company.phoneNumber && (
+                // tel:-link zonder spaties/haakjes, zodat je op je gsm meteen kan bellen
+                <a
+                  href={`tel:${company.phoneNumber.replace(/[^\d+]/g, "")}`}
+                  className="underline decoration-slate-300 underline-offset-4 hover:text-slate-600"
+                >
+                  {company.phoneNumber}
+                </a>
+              )}
+            </DetailItem>
             <DetailItem label="Job URL" wide>
-              {company.jobUrl && <ExternalLink href={company.jobUrl} />}
+              {company.jobUrl && isHttpUrl(company.jobUrl) ? (
+                <ExternalLink href={company.jobUrl} />
+              ) : (
+                (company.jobUrl ?? DEFAULT_JOB_URL_TEXT)
+              )}
             </DetailItem>
           </Section>
 
@@ -138,6 +153,11 @@ const CompanyDetailsModal = ({ company, onClose }: CompanyDetailsModalProps) => 
             <DetailItem label="Cons" wide>
               {company.cons && <p className="whitespace-pre-line">{company.cons}</p>}
             </DetailItem>
+            {company.rejectedAt && (
+              <DetailItem label="Rejected on" wide>
+                {formatDate(company.rejectedAt, { isUtc: true })}
+              </DetailItem>
+            )}
             <DetailItem label="Rejection reason" wide>
               {company.rejectionReason && <p className="whitespace-pre-line">{company.rejectionReason}</p>}
             </DetailItem>

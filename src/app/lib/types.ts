@@ -16,6 +16,7 @@ export type Company = {
   jobUrl: string | null;
   createdAt: string;
   updatedAt: string;
+  rejectedAt: string | null;
   applicationMethod: ApplicationMethod | null;
   isSpontaneous: boolean;
   followUpMethod: FollowUpMethod | null;
@@ -25,6 +26,7 @@ export type Company = {
   rejectionReason: string | null;
   cons: string | null;
   websiteUrl: string | null;
+  phoneNumber: string | null;
 };
 
 export type FilterButtonProps = {
@@ -70,6 +72,7 @@ export type CompanyFormValues = {
   status: string;
   jobUrl: string;
   websiteUrl: string;
+  phoneNumber: string;
   applicationMethod: string;
   isSpontaneous: boolean;
   cons: string;
@@ -91,6 +94,14 @@ export type ModalProps = {
   onEdit?: () => void;
   title: string;
   children: ReactNode;
+};
+
+export type RejectionReasonModalProps = {
+  open: boolean;
+  companyName: string;
+  defaultReason: string | null;
+  onConfirm: (reason: string) => void;
+  onCancel: () => void;
 };
 
 export type CurrentUser = {

@@ -5,6 +5,19 @@ export function parseSqliteDate(value: string, isUtc: boolean): Date {
   return new Date(isUtc && !iso.endsWith("Z") ? `${iso}Z` : iso);
 }
 
+// Wordt getoond wanneer er geen job URL is ingevuld.
+export const DEFAULT_JOB_URL_TEXT = "Spontaneous application";
+
+// Enkel echte http(s)-links worden klikbaar; andere tekst tonen we gewoon als tekst.
+export function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export function formatDate(value: string, { isUtc = false } = {}): string {
   return parseSqliteDate(value, isUtc).toLocaleDateString("en-GB", {
     day: "numeric",
